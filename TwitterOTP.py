@@ -34,13 +34,18 @@ api = tweepy.API(auth)
 def main():
     #Command Arguments
     parser = argparse.ArgumentParser(description="Crypt Twitter Bot by NotPike")
+    parser.add_argument('-dm', dest="directMsg",help='Send an Direct message')
     parser.add_argument('-e', dest="encrypt",help='Send an encrypted message')
     parser.add_argument('-d', dest="decrypt",help='Decrypt a message')
     parser.add_argument('-k', dest="key",help='Key for Encryption and Decrypt')
     arguments = parser.parse_args()
 
     #Dem Arument Logic
-    if(arguments.encrypt):
+    if(arguments.directMsg and arguments.encrypt):
+        msg = arguments.encrypt
+        user = arguments.directMsg
+        tweetDM(user,msg)        
+    elif(arguments.encrypt):
         msg = arguments.encrypt
         tweet(msg)
     elif(arguments.decrypt):
@@ -77,6 +82,16 @@ def tweet(msg):
     else:
         print("Message: " + cryptMsg)
         api.update_status(cryptMsg)
+
+def tweetDM(user,msg):
+    cryptMsg = oneTimePadEncrypt(msg)
+
+    #Checks to see if encrypted msg is larger then 240 chr
+    if(len(cryptMsg) > 240):
+        print("Message is too long")
+    else:
+        print("Message: " + cryptMsg)
+        api.send_direct_message(user,'','',cryptMsg)
 
 if __name__ == "__main__":
     main()
