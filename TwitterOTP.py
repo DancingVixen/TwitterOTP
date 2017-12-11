@@ -16,7 +16,7 @@ import binascii
 import itertools
 import base64
 import os
-
+import datetime
 
 #Twitter Creds
 twitterName = ""
@@ -66,7 +66,6 @@ def main():
         msg = arguments.encrypt
         user = arguments.directMsg
         tweetDM(user,msg)
-       
 
     elif(arguments.encrypt and arguments.key and arguments.log):
         msg = arguments.encrypt
@@ -85,7 +84,6 @@ def main():
         msg = arguments.encrypt
         tweet(msg)
 
-        
     elif(arguments.decrypt and arguments.key):
         msg = arguments.decrypt
         key = arguments.key
@@ -133,7 +131,6 @@ def keyGen(msgLength):
 
 def tweet(msg,key = 'nokey'):
     cryptMsg, key = oneTimePadEncrypt(msg,key)
-
     #Checks to see if encrypted msg is larger then 240 chr
     #len(STARTMSG+ENDMSG) acounts for the begin and end of msg
     if(len(cryptMsg) > 240 - len(STARTMSG+ENDMSG)):
@@ -145,7 +142,6 @@ def tweet(msg,key = 'nokey'):
 
 def tweetDM(user,msg,key = 'nokey'):              
     cryptMsg, newKey = oneTimePadEncrypt(msg,key)
-
     if(len(cryptMsg) > 240 - len(STARTMSG+ENDMSG)):
         print("Message is too long")
     else:
