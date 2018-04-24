@@ -1,5 +1,7 @@
 # TwitterOTP
 
-Twitter OTP furry stuff
+Twitter OTP
 
-Forked from (if)notpike
+Forked from notpike.
+
+Working on scheduling 4/24/2018
